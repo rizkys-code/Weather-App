@@ -1,0 +1,182 @@
+        /* ============================
+        RESET & BASE
+        ============================ */
+
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+
+        body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        body[data-mode="day"] {
+        background-color: #fef3bd;
+        }
+
+        body[data-mode="night"] {
+        background-color: #0d1b2a;
+        }
+
+
+        /* ============================
+        WEATHER CARD
+        ============================ */
+
+        .weather-card {
+        position: relative;
+        z-index: 1;
+        width: 360px;
+        height: 600px;
+        padding: 20px;
+        border-radius: 20px;
+        text-align: center;
+        color: #fff;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+
+        /* Overlay border effect */
+        .weather-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        padding: 10px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #00cfff, #ffe15d);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+        pointer-events: none;
+        }
+
+        /* Mode backgrounds */
+        .weather-card[data-mode="day"] {
+        background: url(assets/day-mountain.png) no-repeat center bottom;
+        background-size: cover;
+        background-color: #fef3bd;
+        }
+
+        .weather-card[data-mode="night"] {
+        background: url(assets/night-mountain.png) no-repeat center bottom;
+        background-size: cover;
+        background-color: #0d1b2a;
+        }
+
+        .weather-card[data-mode="day"]::before {
+        background: linear-gradient(135deg, #00cfff, #ffe15d);
+        }
+
+        .weather-card[data-mode="night"]::before {
+        background: linear-gradient(135deg, #59ccca, #003466);
+        }
+
+
+        /* ============================
+        WEATHER TOP
+        ============================ */
+
+        .weather-top {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        }
+
+        .weather-top .city {
+        font-size: 30px;
+        font-weight: 400;
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .weather-top .date {
+        font-size: 16px;
+        font-weight: 400;
+        margin: 7px 0;
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .weather-top .details-top {
+        display: flex;
+        justify-content: center;
+        gap: 80px;
+        font-size: 16px;
+        font-weight: 400;
+        margin-top: 6px;
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+        }
+
+
+        /* ============================
+        WEATHER CENTER
+        ============================ */
+
+        .weather-center {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 120px;
+        }
+
+        .weather-center .weather-icon {
+        font-size: 52px;
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .temperature {
+        font-size: 30px;
+        color: #fff;
+        }
+
+
+        /* ============================
+        SUN & MOON
+        ============================ */
+
+        .sun,
+        .moon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        position: absolute;
+        top: 160px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: pulse 3s ease-in-out infinite;
+        display: none;
+        transition: opacity 0.5s ease;
+        }
+
+        .sun {
+        background: #fff8b0;
+        box-shadow: 0 0 30px #000;
+        }
+
+        .moon {
+        background: #fff;
+        box-shadow: 0 0 30px #fff;
+        }
+
+
+        /* ============================
+        ANIMATIONS
+        ============================ */
+
+        @keyframes pulse {
+        0%,
+        100% {
+            box-shadow: 0 0 30px currentcolor;
+        }
+        50% {
+            box-shadow: 0 0 50px currentcolor;
+        }
+        }
