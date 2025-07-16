@@ -40,7 +40,7 @@ function isNight(hour) {
 }
 
 function getWeatherByCity(city) {
-    const URL = `http://api.weatherapi.com/v1/forecast.json?key=${APIKEY}&q=${city}`;
+    const URL = `http://api.weatherapi.com/v1/forecast.json?key=${APIKEY}&q=${city}&days=4`;
 
     fetch(URL)
         .then(response => {
@@ -86,14 +86,34 @@ function getWeatherByCity(city) {
                 day: "numeric"
             });
 
-            document.querySelector(".humidity").textContent = `${current.humidity}%`;
-            document.querySelector(".wind").textContent = `${current.wind_kph}km/h`;
+            document.querySelector(".humidity").textContent = `💧 ${current.humidity}%`;
+            document.querySelector(".wind").textContent = `💨 ${current.wind_kph}km/h`;
             document.querySelector(".temperature").textContent = `${current.temp_c}°C`;
             document.querySelector(".weather-icon").textContent = emoji;
+
+            updateForecast(forecast.forecastday, nightMode);
 
         }).catch(error => {
             console.error("Error fetching weather data:", error);
         });
+}
+
+function updateForecast(day, nightMOde){
+    const forecastItems = document.querySelectorAll(".forecast-item"); 
+    day.forEach((day, index) => {
+        const emoji = getIconEmoji(day.day.condition.code, nightMOde);
+        const label = new Date(day.date).toLocaleDateString("id-ID", {
+            weekday: "long",
+            month: "long",
+            day: "numeric"
+        });
+
+        if (forecastItems[index]) {
+            forecastItems[index].querySelector(".weather-day").textContent = label;
+            forecastItems[index].querySelector(".weather-icon").textContent = emoji;
+            forecastItems[index].querySelector(".temperature-card").textContent = `${day.day.avgtemp_c}°C`;
+        }
+    })
 }
 
 window.onload = () => {
